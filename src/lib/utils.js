@@ -1,21 +1,23 @@
-import { useActiveSectionContext } from "@/context/active-section-context";
-import { useEffect } from "react";
-import { useInView } from "react-intersection-observer";
-import { SectionName } from "./types.js";
+export const validateString = (value, maxLength) => {
+  if (!value || typeof value !== "string" || value.length > maxLength) {
+    return false;
+  }
 
-export function useSectionInView(sectionName, threshold = 0.75) {
-  const { ref, inView } = useInView({
-    threshold,
-  });
-  const { setActiveSection, timeOfLastClick } = useActiveSectionContext();
+  return true;
+};
 
-  useEffect(() => {
-    if (inView && Date.now() - timeOfLastClick > 1000) {
-      setActiveSection(SectionName);
-    }
-  }, [inView, setActiveSection, timeOfLastClick, sectionName]);
+export const getErrorMessage = (error) => {
+  let message;
 
-  return {
-    ref,
-  };
-}
+  if (error instanceof Error) {
+    message = error.message;
+  } else if (error && typeof error === "object" && "message" in error) {
+    message = String(error.message);
+  } else if (typeof error === "string") {
+    message = error;
+  } else {
+    message = "Something went wrong";
+  }
+
+  return message;
+};

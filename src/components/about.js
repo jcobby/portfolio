@@ -15,7 +15,6 @@ function About() {
 
   const { ref } = useSectionInView("Home");
   const { setActiveSection, setTimeOfLastClick } = useActiveSectionContext();
-console.log('heyo this is ref ' + ref)
 
   return (
     <section className="max-w-[50rem] text-center"
